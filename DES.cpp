@@ -150,7 +150,7 @@ string shiftSubKey(string subKey , int shiftConstant){
     {
         shiftedSubKey += subKey[i];
     }
-    for (int i = subKey.length() - shiftConstant; i < subKey.length(); i++)
+    for (int i = 0; i < shiftConstant; i++)
     {
         shiftedSubKey += subKey[i];
     }
@@ -168,7 +168,7 @@ string createKeys(string binaryKey)
 
     cout << keyAfterPC1 << endl;
     cout << leftC0 << endl;
-    //cout << rightD0 << endl;
+    cout << rightD0 << endl;
 
     int shiftConstants[16] = {1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1};
 
@@ -178,8 +178,10 @@ string createKeys(string binaryKey)
 
     for (int i = 0; i < round; i++)
     {
+        cout<<endl;
         shiftedLeftC[i] = shiftSubKey(leftC0 , shiftConstants[i]);
         shiftedRightD[i] = shiftSubKey(rightD0 , shiftConstants[i]);
+        cout<<endl;
     }
     
 
