@@ -2,6 +2,8 @@
 
 using namespace std;
 
+string subKeyList[16];
+
 string asciiToBinary(char character)
 {
     int s[8];
@@ -103,7 +105,6 @@ string bin2hex(string s)
 
 string stepPC1(string binaryKey)
 {
-
     int pc1[56] = {57, 49, 41, 33, 25, 17, 9,
                    1, 58, 50, 42, 34, 26, 18,
                    10, 2, 59, 51, 43, 35, 27,
@@ -142,6 +143,7 @@ string createRightD0(string keyAfterPC1)
     }
     return rightD0;
 }
+
 string shiftSubKey(string subKey , int shiftConstant){
 
     string shiftedSubKey = "";
@@ -158,6 +160,27 @@ string shiftSubKey(string subKey , int shiftConstant){
     cout << shiftedSubKey << endl;
     return shiftedSubKey;
 
+}
+
+string stepPC2(string shiftedKey)
+{
+    int pc2[48] = {  14,    17,   11,    24,     1,    5,
+                      3,    28,   15,     6,    21,   10,
+                     23,    19,   12,     4,    26,    8,
+                     16,     7,   27,    20,    13,    2,
+                     41,    52,   31,    37,    47,   55,
+                     30,    40,   51,    45,    33,   48,
+                     44,    49,   39,    56,    34,   53,
+                     46,    42,   50,    36,    29,   32};
+
+    string keyAfterPC2 = "";
+
+    for (int i = 0; i < 48; i++)
+    {
+        keyAfterPC2 += shiftedKey[pc2[i] - 1];
+    }
+    //cout << keyAfterPC2 << endl;
+    return keyAfterPC2;
 }
 string createKeys(string binaryKey)
 {
@@ -176,14 +199,21 @@ string createKeys(string binaryKey)
     string shiftedLeftC[round];
     string shiftedRightD[round];
 
-    for (int i = 0; i < round; i++)
+    shiftedLeftC[0] = shiftSubKey(leftC0 , shiftConstants[0]);
+    shiftedRightD[0] = shiftSubKey(rightD0 , shiftConstants[0]);
+    for (int i = 1; i < round; i++)
     {
         cout<<endl;
-        shiftedLeftC[i] = shiftSubKey(leftC0 , shiftConstants[i]);
-        shiftedRightD[i] = shiftSubKey(rightD0 , shiftConstants[i]);
+        shiftedLeftC[i] = shiftSubKey(shiftedLeftC[i-1] , shiftConstants[i]);
+        shiftedRightD[i] = shiftSubKey(shiftedRightD[i-1] , shiftConstants[i]);
         cout<<endl;
     }
     
+    for (int i = 0; i < round; i++)
+    {
+        subKeyList[i] = stepPC2(shiftedLeftC[i] + shiftedRightD[i]);
+        cout<<endl;
+    }
 
 }
 
