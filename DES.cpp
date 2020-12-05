@@ -4,18 +4,16 @@ using namespace std;
 
 string asciiToBinary(char character)
 {
-
-    int i;
     int s[8];
     string binary = "";
 
-    for (i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
     {
         s[i] = character % 2;
         character = character / 2;
     }
-    int a, b;
-    for (b = 0, a = 7; b < 8; b++, a--)
+    
+    for (int b = 0, a = 7; b < 8; b++, a--)
     {
         //cout << s[a];
         if (s[a] == 1)
@@ -30,20 +28,32 @@ string asciiToBinary(char character)
     return binary;
 }
 
+string textToBinaryText(string text){
+
+    string binaryText= "";
+    for (int i = 0; i < text.length(); i++)
+    {
+        binaryText += asciiToBinary(text[i]);
+    }
+
+    return binaryText;
+
+}
+
 int main()
 {
-    string plainText;
-    cout << "Enter plain text: ";
-    cin >> plainText;
+    string plainText = "PRITOMKD";
+    string key = "LAMAOLOL";
+   // cout << "Enter plain text: ";
+   // cin >> plainText;
 
 
-    string result = ""; 
+    string binaryText = textToBinaryText(plainText); 
+    string binaryKey =  textToBinaryText(key); 
     
-    for (int i = 0; i < plainText.length(); i++)
-    {
-        result += asciiToBinary(plainText[i]);
-    }
+   
     
+
     
-    cout << result;
+    cout << binaryText;
 }
