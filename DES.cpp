@@ -206,7 +206,7 @@ string createKeys(string binaryKey)
         //cout<<endl;
         shiftedLeftC[i] = shiftSubKey(shiftedLeftC[i-1] , shiftConstants[i]);
         shiftedRightD[i] = shiftSubKey(shiftedRightD[i-1] , shiftConstants[i]);
-       // cout<<endl;
+        //cout<<endl;
     }
     
     for (int i = 0; i < round; i++)
@@ -255,6 +255,21 @@ string eBitExpansionStep(string rightPart){
     }
     return rightPartAfterEBItExpansion;
 }
+
+string XORstep(string r0AfterEBItExpansion, string subKey){
+    string r0AfterXOR = "";
+    for (int i = 0; i < r0AfterEBItExpansion.length(); i++)
+    {
+        if(r0AfterEBItExpansion[i]==subKey[i]){
+            r0AfterXOR += "0";
+        }
+        else{
+            r0AfterXOR += "1";
+        }
+    }
+    return r0AfterXOR;
+    
+}
 int main()
 {
     string plainText = "PRITOMKD";
@@ -277,10 +292,12 @@ int main()
     string l0 = createLeftPart(textAfterInitialPermutation);
     string r0 = createRightPart(textAfterInitialPermutation);
     string r0AfterEBItExpansion = eBitExpansionStep(r0);
+    string r0AfterXOR = XORstep(r0AfterEBItExpansion,subKeyList[0]);
 
-    cout << l0 << endl;
-    cout << r0 << endl;
-    cout << r0AfterEBItExpansion << endl;
+    // cout << l0 << endl;
+    // cout << r0 << endl;
+    // cout << r0AfterEBItExpansion << endl;
+    cout << r0AfterXOR << endl;
 
 
 }
