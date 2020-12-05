@@ -179,19 +179,19 @@ string stepPC2(string shiftedKey)
     {
         keyAfterPC2 += shiftedKey[pc2[i] - 1];
     }
-    cout << keyAfterPC2 << endl;
+    //cout << keyAfterPC2 << endl;
     return keyAfterPC2;
 }
+
 string createKeys(string binaryKey)
 {
-
     string keyAfterPC1 = stepPC1(binaryKey);
     string leftC0 = createLeftC0(keyAfterPC1);
     string rightD0 = createRightD0(keyAfterPC1);
 
-    cout << keyAfterPC1 << endl;
-    cout << leftC0 << endl;
-    cout << rightD0 << endl;
+    //cout << keyAfterPC1 << endl;
+    //cout << leftC0 << endl;
+   // cout << rightD0 << endl;
 
     int shiftConstants[16] = {1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1};
 
@@ -212,9 +212,28 @@ string createKeys(string binaryKey)
     for (int i = 0; i < round; i++)
     {
         subKeyList[i] = stepPC2(shiftedLeftC[i] + shiftedRightD[i]);
-        cout<<endl;
+        //cout<<endl;
     }
 
+}
+
+string stepInitialPermutation(string text){
+    int IP[64] = {
+            58,    50,   42,    34,    26,   18,    10,    2,
+            60,    52,   44,    36,    28,   20,    12,    4,
+            62,    54,   46,    38,    30,   22,    14,    6,
+            64,    56,   48,    40,    32,   24,    16,    8,
+            57,    49,   41,    33,    25,   17,     9,    1,
+            59,    51,   43,    35,    27,   19,    11,    3,
+            61,    53,   45,    37,    29,   21,    13,    5,
+            63,    55,   47,    39,    31,   23,    15,    7
+    };
+    string textAfterInitialPermutation = "";
+    for (int i = 0; i < 64; i++)
+    {
+        textAfterInitialPermutation += text[IP[i] - 1];
+    }
+    return textAfterInitialPermutation;
 }
 
 int main()
@@ -233,4 +252,8 @@ int main()
     string testText = "0000000100100011010001010110011110001001101010111100110111101111";
     string testKey = "0001001100110100010101110111100110011011101111001101111111110001";
     createKeys(testKey);
+
+    string textAfterInitialPermutation = stepInitialPermutation(testText);
+    cout << textAfterInitialPermutation << endl;
+
 }
