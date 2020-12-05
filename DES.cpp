@@ -124,24 +124,24 @@ string stepPC1(string binaryKey)
     return keyAfterPC1;
 }
 
-string createLeftC0(string keyAfterPC1)
+string createLeftPart(string text)
 {
-    string leftC0 = "";
-    for (int i = 0; i < keyAfterPC1.length()/2; i++)
+    string leftPart = "";
+    for (int i = 0; i < text.length()/2; i++)
     {
-        leftC0 += keyAfterPC1[i];
+        leftPart += text[i];
     }
-    return leftC0;
+    return leftPart;
 }
 
-string createRightD0(string keyAfterPC1)
+string createRightPart(string text)
 {
-    string rightD0 = "";
-    for (int i = keyAfterPC1.length()/2; i < keyAfterPC1.length(); i++)
+    string rightPart = "";
+    for (int i = text.length()/2; i < text.length(); i++)
     {
-        rightD0 += keyAfterPC1[i];
+        rightPart += text[i];
     }
-    return rightD0;
+    return rightPart;
 }
 
 string shiftSubKey(string subKey , int shiftConstant){
@@ -186,8 +186,8 @@ string stepPC2(string shiftedKey)
 string createKeys(string binaryKey)
 {
     string keyAfterPC1 = stepPC1(binaryKey);
-    string leftC0 = createLeftC0(keyAfterPC1);
-    string rightD0 = createRightD0(keyAfterPC1);
+    string leftC0 = createLeftPart(keyAfterPC1);
+    string rightD0 = createRightPart(keyAfterPC1);
 
     //cout << keyAfterPC1 << endl;
     //cout << leftC0 << endl;
@@ -254,6 +254,8 @@ int main()
     createKeys(testKey);
 
     string textAfterInitialPermutation = stepInitialPermutation(testText);
-    cout << textAfterInitialPermutation << endl;
+    // cout << textAfterInitialPermutation << endl;
+    string l0 = createLeftPart(textAfterInitialPermutation);
+    string R0 = createRightPart(textAfterInitialPermutation);
 
 }
