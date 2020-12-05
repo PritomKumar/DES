@@ -274,22 +274,37 @@ string XORstep(string r0AfterEBItExpansion, string subKey)
 
 int binaryToDecimal(int n)
 {
-    int num = n;
-    int decValue = 0;
-    int base = 1;
+decToBinary    int factor = 1;
+    int total = 0;
 
-    int temp = num;
-    while (temp)
+    while (n != 0)
     {
-        int lastDigit = temp % 10;
-        temp = temp / 10;
-        decValue += lastDigit * base;
-        base = base * 2;
+        total += (n%10) * factor;
+        n /= 10;
+        factor *= 2;
     }
 
-    return decValue;
+    return total;
 }
 
+void decToBinary(int n) 
+{ 
+    int binaryNum[8]; 
+    int binaryNumReal[8]; 
+  
+    int i = 0; 
+    while (n > 0) { 
+  
+        binaryNum[i] = n % 2; 
+        n = n / 2; 
+        i++; 
+    } 
+  
+    for (int j = i - 1,i=0; j >= 0; j--,i++) {
+        binaryNumReal[i] =  binaryNum[j]; 
+    }
+        
+} 
 int stringToInt(string str)
 {
     stringstream converter(str);
@@ -366,5 +381,7 @@ int main()
     // cout << l0 << endl;
     // cout << r0 << endl;
     // cout << r0AfterEBItExpansion << endl;
-    cout << r0AfterXOR << endl;
+    // cout << r0AfterXOR << endl;
+
+    cout << binaryToDecimal(1111) <<endl;
 }
