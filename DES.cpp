@@ -32,10 +32,18 @@ string asciiToBinary(char character)
 
 int main()
 {
-    char character;
-    cout << "enter a character: ";
-    cin >> character;
+    string plainText;
+    cout << "Enter plain text: ";
+    cin >> plainText;
 
-    string result = asciiToBinary(character);
+
+    string result = ""; 
+    
+    for (int i = 0; i < plainText.length(); i++)
+    {
+        result += asciiToBinary(plainText[i]);
+    }
+    
+    
     cout << result;
 }
