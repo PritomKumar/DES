@@ -172,7 +172,16 @@ string createKeys(string binaryKey)
 
     int shiftConstants[16] = {1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1};
 
-    string shiftedLeftC[16] ;
+    int round = 16;
+    string shiftedLeftC[round];
+    string shiftedRightD[round];
+
+    for (int i = 0; i < round; i++)
+    {
+        shiftedLeftC[i] = shiftSubKey(leftC0 , shiftConstants[i]);
+        shiftedRightD[i] = shiftSubKey(rightD0 , shiftConstants[i]);
+    }
+    
 
 }
 
