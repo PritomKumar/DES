@@ -99,7 +99,7 @@ string bin2hex(string s)
     return hex; 
 } 
 
-string createKeys(string binaryKey){
+string stepPC1(string binaryKey){
 
     int pc1[56] = { 57 ,  49 ,  41 ,  33 ,  25 ,  17 ,  9,
                      1 ,  58 ,  50 ,  42 ,  34 ,  26 ,  18,
@@ -110,20 +110,44 @@ string createKeys(string binaryKey){
                     14 ,  6  ,  61 ,  53 ,  45 ,  37 ,  29,
                     21 ,  13 ,   5 ,  28 ,  20 ,  12 ,  4};
 
-    // for (int i = 0; i < 56; i++)
-    // {
-    //     cout << pc1[i] << " ";
-    // }
-
     string keyAfterPC1 = "";
-
     
     for (int i = 0; i < 56; i++)
     {
         keyAfterPC1 += binaryKey[pc1[i]-1];
     }
-    cout << keyAfterPC1 << endl;
-    
+    //cout << keyAfterPC1 << endl;
+    return keyAfterPC1;
+}
+
+string createLeftC0(string keyAfterPC1){
+    string leftC0 = "";
+    for (int i = 0; i < 28; i++)
+    {
+        leftC0 += keyAfterPC1[i];
+    }
+    return leftC0;
+}
+
+string createRightD0(string keyAfterPC1){
+    string rightD0 = "";
+    for (int i = 28; i < 56; i++)
+    {
+        rightD0 += keyAfterPC1[i];
+    }
+    return rightD0;
+}
+
+
+string createKeys(string binaryKey){
+
+    string keyAfterPC1 = stepPC1(binaryKey);
+    string leftC0 = createLeftC0(keyAfterPC1);
+    string rightD0 = createRightD0(keyAfterPC1);
+
+    cout << keyAfterPC1 <<endl;
+    cout << leftC0 <<endl;
+    cout << rightD0 <<endl;
 
 }
 
@@ -138,8 +162,8 @@ int main()
     string binaryText = textToBinaryText(plainText); 
     string binaryKey =  textToBinaryText(key); 
     
-    cout << binaryText << endl;
-    cout << binaryKey << endl;
+   // cout << binaryText << endl;
+   // cout << binaryKey << endl;
 
     string testText = "0000000100100011010001010110011110001001101010111100110111101111";
     string testKey = "0001001100110100010101110111100110011011101111001101111111110001";
