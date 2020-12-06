@@ -45,7 +45,7 @@ string textToBinaryText(string text)
 string hex2bin(string s)
 {
     // hexadecimal to binary conversion
-    unordered_map<char, string> mp;
+    map<char, string> mp;
     mp['0'] = "0000";
     mp['1'] = "0001";
     mp['2'] = "0010";
@@ -73,7 +73,7 @@ string hex2bin(string s)
 string bin2hex(string s)
 {
     // binary to hexadecimal conversion
-    unordered_map<string, string> mp;
+    map<string, string> mp;
     mp["0000"] = "0";
     mp["0001"] = "1";
     mp["0010"] = "2";
@@ -315,7 +315,11 @@ int stringToInt(string str)
 
 string intToString(int num)
 {
-    return to_string(num);
+    stringstream converter;
+    converter << num;
+    string str = converter.str();
+    return str;
+    //return to_string(num);
 }
 
 string sBoxStep(string r0AfterXOR)
@@ -382,9 +386,9 @@ int main()
     string r0AfterEBItExpansion = eBitExpansionStep(r0);
     string r0AfterXOR = XORstep(r0AfterEBItExpansion, subKeyList[0]);
 
-    cout << l0 << endl;
-    cout << r0 << endl;
-    cout << r0AfterEBItExpansion << endl;
+   // cout << l0 << endl;
+    //cout << r0 << endl;
+    //cout << r0AfterEBItExpansion << endl;
     cout << r0AfterXOR << endl;
 
     //cout << binaryToDecimal(1111) <<endl;
@@ -392,28 +396,28 @@ int main()
     int sBoxRound = 0;
     string subOfR0AfterXOR = "";
     cout << "Before" <<endl;
-    // for (int i = 0; i < r0AfterXOR.length(); i++)
-    // {
-    //     string s(1,r0AfterXOR[i]);
-    //     subOfR0AfterXOR += s;
+    for (int i = 0; i < r0AfterXOR.length(); i++)
+    {
+        //string s(1,r0AfterXOR[i]);
+        subOfR0AfterXOR += r0AfterXOR[i];
 
-    //     if(subOfR0AfterXOR.length()%6==0){
+        if(subOfR0AfterXOR.length()%6==0){
 
-    //         string rowStr = "" ;
-    //         rowStr += subOfR0AfterXOR[0];
-    //         rowStr += subOfR0AfterXOR[5];
-    //         string colStr = "" ;
-    //         colStr += subOfR0AfterXOR[1];
-    //         colStr += subOfR0AfterXOR[2];
-    //         colStr += subOfR0AfterXOR[3];
-    //         colStr += subOfR0AfterXOR[4];
+            string rowStr = "" ;
+            rowStr += subOfR0AfterXOR[0];
+            rowStr += subOfR0AfterXOR[5];
+            string colStr = "" ;
+            colStr += subOfR0AfterXOR[1];
+            colStr += subOfR0AfterXOR[2];
+            colStr += subOfR0AfterXOR[3];
+            colStr += subOfR0AfterXOR[4];
 
-    //         cout << rowStr << "  " << colStr <<endl;
+            cout << rowStr << "  " << colStr <<endl;
 
-    //         subOfR0AfterXOR="";
-    //         sBoxRound++;
-    //     }
-    // }
+            subOfR0AfterXOR="";
+            sBoxRound++;
+        }
+    }
     cout << "After" <<endl;
    // cout << subOfR0AfterXOR << endl;
     //sBoxStep(r0AfterXOR);
