@@ -272,6 +272,23 @@ string XORstep(string r0AfterEBItExpansion, string subKey)
     return r0AfterXOR;
 }
 
+string XORstepForLAndRAfterPBox(string rAfterPBox, string l)
+{
+    string rPlus = "";
+    for (int i = 0; i < rAfterPBox.length(); i++)
+    {
+        if (rAfterPBox[i] == l[i])
+        {
+            rPlus += "0";
+        }
+        else
+        {
+            rPlus += "1";
+        }
+    }
+    return rPlus;
+}
+
 int binaryToDecimal(int n)
 {
     int factor = 1;
@@ -455,7 +472,7 @@ int main()
     string r0AfterEBItExpansion = eBitExpansionStep(r0);
     string r0AfterXOR = XORstep(r0AfterEBItExpansion, subKeyList[0]);
 
-   // cout << l0 << endl;
+    //cout << l0 << endl;
     //cout << r0 << endl;
     //cout << r0AfterEBItExpansion << endl;
     cout << r0AfterXOR << endl;
@@ -464,7 +481,11 @@ int main()
 
     string r0AfterSBox = sBoxStep(r0AfterXOR);
     string r0AfterPBox = pBoxStep(r0AfterSBox);
+    string r1 = XORstepForLAndRAfterPBox(r0AfterPBox , l0);
+
     cout << r0AfterPBox <<endl;
+    cout << l0 << endl;
+    cout << r1 << endl;
 
 
 }
