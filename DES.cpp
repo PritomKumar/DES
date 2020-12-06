@@ -287,11 +287,11 @@ int binaryToDecimal(int n)
     return total;
 }
 
-int decToBinary(int n)
+string decToBinary(int n)
 {
-    int binaryNum[8];
-    int binaryNumReal[8];
-
+    int binaryNum[4];
+    int binaryNumReal[4];
+    string binaryStr="0000";
     int i = 0;
     while (n > 0) {
 
@@ -300,9 +300,17 @@ int decToBinary(int n)
         i++;
     }
 
-    for (int j = i - 1,k=0; j >= 0; j--,k++) {
+    for (int j = 0,k=3; j <i; j++,k--) {
         binaryNumReal[k] =  binaryNum[j];
+        if(binaryNum[j]==0){
+            binaryStr[k] = '0';
+        }
+        else{
+            binaryStr[k] = '1';
+        }
     }
+
+    return binaryStr;
 
 }
 int stringToInt(string str)
@@ -358,7 +366,46 @@ string sBoxStep(string r0AfterXOR)
                            2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11}};
 
 
+    int sBoxRound = 0;
+    string subOfR0AfterXOR = "";
+    string r0AfterSBox = "";
+    cout << "Before" <<endl;
+    for (int i = 0; i < r0AfterXOR.length(); i++)
+    {
+        //string s(1,r0AfterXOR[i]);
+        subOfR0AfterXOR += r0AfterXOR[i];
 
+        if(subOfR0AfterXOR.length()%6==0){
+
+            string rowStr = "" ;
+            rowStr += subOfR0AfterXOR[0];
+            rowStr += subOfR0AfterXOR[5];
+            string colStr = "" ;
+            colStr += subOfR0AfterXOR[1];
+            colStr += subOfR0AfterXOR[2];
+            colStr += subOfR0AfterXOR[3];
+            colStr += subOfR0AfterXOR[4];
+
+            //cout << rowStr << "  " << colStr <<endl;
+
+            int row = binaryToDecimal(stringToInt(rowStr));
+            int col = binaryToDecimal(stringToInt(colStr));
+
+            //cout << row << "  " << col <<endl;
+            int sBoxValue = sBox[sBoxRound][row][col];
+
+            //cout << sBoxValue <<endl;
+
+            string sBoxValueStr = decToBinary(sBoxValue);
+            //cout << sBoxValueStr <<endl;
+
+            r0AfterSBox += sBoxValueStr;
+            subOfR0AfterXOR="";
+            sBoxRound++;
+        }
+    }
+    cout << r0AfterSBox <<endl;
+    cout << "After" <<endl;
 
 }
 
@@ -393,32 +440,7 @@ int main()
 
     //cout << binaryToDecimal(1111) <<endl;
 
-    int sBoxRound = 0;
-    string subOfR0AfterXOR = "";
-    cout << "Before" <<endl;
-    for (int i = 0; i < r0AfterXOR.length(); i++)
-    {
-        //string s(1,r0AfterXOR[i]);
-        subOfR0AfterXOR += r0AfterXOR[i];
 
-        if(subOfR0AfterXOR.length()%6==0){
-
-            string rowStr = "" ;
-            rowStr += subOfR0AfterXOR[0];
-            rowStr += subOfR0AfterXOR[5];
-            string colStr = "" ;
-            colStr += subOfR0AfterXOR[1];
-            colStr += subOfR0AfterXOR[2];
-            colStr += subOfR0AfterXOR[3];
-            colStr += subOfR0AfterXOR[4];
-
-            cout << rowStr << "  " << colStr <<endl;
-
-            subOfR0AfterXOR="";
-            sBoxRound++;
-        }
-    }
-    cout << "After" <<endl;
    // cout << subOfR0AfterXOR << endl;
-    //sBoxStep(r0AfterXOR);
+    sBoxStep(r0AfterXOR);
 }
