@@ -407,6 +407,28 @@ string sBoxStep(string r0AfterXOR)
     cout << r0AfterSBox <<endl;
     cout << "After" <<endl;
 
+    return r0AfterSBox;
+}
+
+string pBoxStep(string r0AfterSBox)
+{
+    int PBox[32] = {
+                         16,   7,  20,  21,
+                         29,  12,  28,  17,
+                          1,  15,  23,  26,
+                          5,  18,  31,  10,
+                          2,   8,  24,  14,
+                         32,  27,   3,   9,
+                         19,  13,  30,   6,
+                         22,  11,   4,  25,
+        };
+
+    string r0AfterPBox = "";
+    for (int i = 0; i < 32; i++)
+    {
+        r0AfterPBox += r0AfterSBox[PBox[i] - 1];
+    }
+    return r0AfterPBox;
 }
 
 int main()
@@ -440,7 +462,9 @@ int main()
 
     //cout << binaryToDecimal(1111) <<endl;
 
+    string r0AfterSBox = sBoxStep(r0AfterXOR);
+    string r0AfterPBox = pBoxStep(r0AfterSBox);
+    cout << r0AfterPBox <<endl;
 
-   // cout << subOfR0AfterXOR << endl;
-    sBoxStep(r0AfterXOR);
+
 }
