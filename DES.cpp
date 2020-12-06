@@ -3,6 +3,8 @@
 using namespace std;
 
 string subKeyList[16];
+string leftPartList[17];
+string rightPartList[17];
 
 string asciiToBinary(char character)
 {
@@ -386,7 +388,7 @@ string sBoxStep(string r0AfterXOR)
     int sBoxRound = 0;
     string subOfR0AfterXOR = "";
     string r0AfterSBox = "";
-    cout << "Before" <<endl;
+    //cout << "Before" <<endl;
     for (int i = 0; i < r0AfterXOR.length(); i++)
     {
         //string s(1,r0AfterXOR[i]);
@@ -421,8 +423,8 @@ string sBoxStep(string r0AfterXOR)
             sBoxRound++;
         }
     }
-    cout << r0AfterSBox <<endl;
-    cout << "After" <<endl;
+    //cout << r0AfterSBox <<endl;
+    //cout << "After" <<endl;
 
     return r0AfterSBox;
 }
@@ -448,6 +450,52 @@ string pBoxStep(string r0AfterSBox)
     return r0AfterPBox;
 }
 
+string secondPhase(){
+
+    for(int i=0; i< 16;i++){
+
+        string r0AfterEBItExpansion = eBitExpansionStep(rightPartList[i]);
+        string r0AfterXOR = XORstep(r0AfterEBItExpansion, subKeyList[i]);
+
+        //cout << leftPartList[i] << endl;
+        //cout << rightPartList[i] << endl;
+        //cout << r0AfterEBItExpansion << endl;
+        //cout << r0AfterXOR << endl;
+
+        string r0AfterSBox = sBoxStep(r0AfterXOR);
+        string r0AfterPBox = pBoxStep(r0AfterSBox);
+        string r1 = XORstepForLAndRAfterPBox(r0AfterPBox , leftPartList[i]);
+        rightPartList[i+1] = r1;
+        leftPartList[i+1] = rightPartList[i];
+
+       // cout << r0AfterSBox <<endl;
+        //cout << r0AfterPBox <<endl;
+        //cout << l0 << endl;
+        //cout << r1 << endl;
+    }
+
+    for(int j=0;j<17;j++){
+        cout << "Round " << j <<endl;;
+        cout<<"Left Part   "<<endl;
+        for(int i=0; i< 32;i++){
+            cout << leftPartList[j][i];
+            if((i+1)%8==0){
+                cout<<endl;
+            }
+        }
+        cout<<endl;
+        cout<<"Right Part  "<<endl;
+        for(int i=0; i< 32;i++){
+            cout << rightPartList[j][i];
+            if((i+1)%8==0){
+                cout<<endl;
+            }
+        }
+        cout<<endl;
+    }
+
+}
+
 int main()
 {
     string plainText = "PRITOMKD";
@@ -463,29 +511,17 @@ int main()
 
     string testText = "0000000100100011010001010110011110001001101010111100110111101111";
     string testKey = "0001001100110100010101110111100110011011101111001101111111110001";
+    string testText2 = "0100100001100101011011000110110001101111001000000101011101101111";
+    string testKey2 = "0011010000101101101101011010100000011101110110111001000000000100";
     createKeys(testKey);
 
     string textAfterInitialPermutation = stepInitialPermutation(testText);
     // cout << textAfterInitialPermutation << endl;
     string l0 = createLeftPart(textAfterInitialPermutation);
     string r0 = createRightPart(textAfterInitialPermutation);
-    string r0AfterEBItExpansion = eBitExpansionStep(r0);
-    string r0AfterXOR = XORstep(r0AfterEBItExpansion, subKeyList[0]);
+    leftPartList[0] = l0;
+    rightPartList[0] = r0;
 
-    //cout << l0 << endl;
-    //cout << r0 << endl;
-    //cout << r0AfterEBItExpansion << endl;
-    cout << r0AfterXOR << endl;
-
-    //cout << binaryToDecimal(1111) <<endl;
-
-    string r0AfterSBox = sBoxStep(r0AfterXOR);
-    string r0AfterPBox = pBoxStep(r0AfterSBox);
-    string r1 = XORstepForLAndRAfterPBox(r0AfterPBox , l0);
-
-    cout << r0AfterPBox <<endl;
-    cout << l0 << endl;
-    cout << r1 << endl;
-
+    secondPhase();
 
 }
