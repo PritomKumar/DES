@@ -274,7 +274,7 @@ string XORstep(string r0AfterEBItExpansion, string subKey)
 
 int binaryToDecimal(int n)
 {
-decToBinary    int factor = 1;
+    int factor = 1;
     int total = 0;
 
     while (n != 0)
@@ -287,24 +287,24 @@ decToBinary    int factor = 1;
     return total;
 }
 
-void decToBinary(int n) 
-{ 
-    int binaryNum[8]; 
-    int binaryNumReal[8]; 
-  
-    int i = 0; 
-    while (n > 0) { 
-  
-        binaryNum[i] = n % 2; 
-        n = n / 2; 
-        i++; 
-    } 
-  
-    for (int j = i - 1,i=0; j >= 0; j--,i++) {
-        binaryNumReal[i] =  binaryNum[j]; 
+int decToBinary(int n)
+{
+    int binaryNum[8];
+    int binaryNumReal[8];
+
+    int i = 0;
+    while (n > 0) {
+
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
     }
-        
-} 
+
+    for (int j = i - 1,k=0; j >= 0; j--,k++) {
+        binaryNumReal[k] =  binaryNum[j];
+    }
+
+}
 int stringToInt(string str)
 {
     stringstream converter(str);
@@ -318,7 +318,7 @@ string intToString(int num)
     return to_string(num);
 }
 
-string sBoxStep()
+string sBoxStep(string r0AfterXOR)
 {
     int sBox[8][4][16] = {{14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7,
                            0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8,
@@ -352,6 +352,10 @@ string sBoxStep()
                            1, 15, 13, 8, 10, 3, 7, 4, 12, 5, 6, 11, 0, 14, 9, 2,
                            7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8,
                            2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11}};
+
+
+
+
 }
 
 int main()
@@ -378,10 +382,39 @@ int main()
     string r0AfterEBItExpansion = eBitExpansionStep(r0);
     string r0AfterXOR = XORstep(r0AfterEBItExpansion, subKeyList[0]);
 
-    // cout << l0 << endl;
-    // cout << r0 << endl;
-    // cout << r0AfterEBItExpansion << endl;
-    // cout << r0AfterXOR << endl;
+    cout << l0 << endl;
+    cout << r0 << endl;
+    cout << r0AfterEBItExpansion << endl;
+    cout << r0AfterXOR << endl;
 
-    cout << binaryToDecimal(1111) <<endl;
+    //cout << binaryToDecimal(1111) <<endl;
+
+    int sBoxRound = 0;
+    string subOfR0AfterXOR = "";
+    cout << "Before" <<endl;
+    // for (int i = 0; i < r0AfterXOR.length(); i++)
+    // {
+    //     string s(1,r0AfterXOR[i]);
+    //     subOfR0AfterXOR += s;
+
+    //     if(subOfR0AfterXOR.length()%6==0){
+
+    //         string rowStr = "" ;
+    //         rowStr += subOfR0AfterXOR[0];
+    //         rowStr += subOfR0AfterXOR[5];
+    //         string colStr = "" ;
+    //         colStr += subOfR0AfterXOR[1];
+    //         colStr += subOfR0AfterXOR[2];
+    //         colStr += subOfR0AfterXOR[3];
+    //         colStr += subOfR0AfterXOR[4];
+
+    //         cout << rowStr << "  " << colStr <<endl;
+
+    //         subOfR0AfterXOR="";
+    //         sBoxRound++;
+    //     }
+    // }
+    cout << "After" <<endl;
+   // cout << subOfR0AfterXOR << endl;
+    //sBoxStep(r0AfterXOR);
 }
