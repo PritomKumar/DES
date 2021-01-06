@@ -6,6 +6,18 @@ string subKeyList[16];
 string leftPartList[17];
 string rightPartList[17];
 
+void printIn64BitStyle(string text){
+
+    for(int i=0;i<text.length();i++){
+
+        cout << text[i]<<" ";
+        if((i+1)%6==0){
+            cout<<endl;
+        }
+    }
+    cout <<endl;
+}
+
 string asciiToBinary(char character)
 {
     int s[8];
@@ -188,6 +200,7 @@ string stepPC2(string shiftedKey)
 string createKeys(string binaryKey)
 {
     string keyAfterPC1 = stepPC1(binaryKey);
+    //printIn64BitStyle(keyAfterPC1);
     string leftC0 = createLeftPart(keyAfterPC1);
     string rightD0 = createRightPart(keyAfterPC1);
 
@@ -203,6 +216,9 @@ string createKeys(string binaryKey)
 
     shiftedLeftC[0] = shiftSubKey(leftC0, shiftConstants[0]);
     shiftedRightD[0] = shiftSubKey(rightD0, shiftConstants[0]);
+    //printIn64BitStyle(shiftedLeftC[0]);
+    //printIn64BitStyle(shiftedRightD[0]);
+
     for (int i = 1; i < round; i++)
     {
         //cout<<endl;
@@ -211,11 +227,12 @@ string createKeys(string binaryKey)
         //cout<<endl;
     }
 
-    for (int i = 0; i < round; i++)
+    for (int i = 0; i < 1; i++)
     {
         subKeyList[i] = stepPC2(shiftedLeftC[i] + shiftedRightD[i]);
         //cout<<endl;
     }
+    printIn64BitStyle(subKeyList[0]);
 }
 
 string stepInitialPermutation(string text)
@@ -462,13 +479,21 @@ string secondPhase(){
         //cout << r0AfterEBItExpansion << endl;
         //cout << r0AfterXOR << endl;
 
+        //printIn64BitStyle(r0AfterEBItExpansion);
+        //printIn64BitStyle(r0AfterXOR);
+        //printIn64BitStyle(leftPartList[0]);
+
         string r0AfterSBox = sBoxStep(r0AfterXOR);
         string r0AfterPBox = pBoxStep(r0AfterSBox);
         string r1 = XORstepForLAndRAfterPBox(r0AfterPBox , leftPartList[i]);
         rightPartList[i+1] = r1;
         leftPartList[i+1] = rightPartList[i];
 
-       // cout << r0AfterSBox <<endl;
+        //cout << r0AfterSBox <<endl;
+        //printIn64BitStyle(r0AfterSBox);
+        //printIn64BitStyle(r0AfterPBox);
+        //printIn64BitStyle(r1);
+
         //cout << r0AfterPBox <<endl;
         //cout << l0 << endl;
         //cout << r1 << endl;
@@ -520,13 +545,16 @@ string finalPermutation(string resultBeforePermutation)
 
 int main()
 {
-    string plainText = "PRITOMKD";
+    string plainText = "PRITOM19";
     string key = "LAMAOLOL";
     // cout << "Enter plain text: ";
     // cin >> plainText;
 
     string binaryText = textToBinaryText(plainText);
     string binaryKey = textToBinaryText(key);
+
+    //printIn64BitStyle(binaryText);
+    //printIn64BitStyle(binaryKey);
 
     // cout << binaryText << endl;
     // cout << binaryKey << endl;
@@ -538,8 +566,10 @@ int main()
 
     createKeys(testKey2);
 
-    string textAfterInitialPermutation = stepInitialPermutation(testText2);
+    string textAfterInitialPermutation = stepInitialPermutation(binaryText);
     // cout << textAfterInitialPermutation << endl;
+    //printIn64BitStyle(textAfterInitialPermutation);
+
     string l0 = createLeftPart(textAfterInitialPermutation);
     string r0 = createRightPart(textAfterInitialPermutation);
     leftPartList[0] = l0;
@@ -547,11 +577,15 @@ int main()
 
     secondPhase();
 
+    //printIn64BitStyle(leftPartList[1]);
+    //printIn64BitStyle(rightPartList[1]);
+
     string enCryptedBinary = finalPermutation(rightPartList[16]+leftPartList[16]);
     string enCryptedHex = bin2hex(enCryptedBinary);
 
-    cout << enCryptedBinary <<endl;
-    cout << enCryptedHex <<endl;
+
+    //cout << enCryptedBinary <<endl;
+    //cout << enCryptedHex <<endl;
 
 
 }
