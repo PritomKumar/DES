@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+    #include <bits/stdc++.h>
 
 using namespace std;
 
@@ -76,6 +76,12 @@ string hex2bin(string s)
     mp['D'] = "1101";
     mp['E'] = "1110";
     mp['F'] = "1111";
+    mp['a'] = "1010";
+    mp['b'] = "1011";
+    mp['c'] = "1100";
+    mp['d'] = "1101";
+    mp['e'] = "1110";
+    mp['f'] = "1111";
     string bin = "";
     for (int i = 0; i < s.size(); i++)
     {
@@ -232,7 +238,7 @@ string createKeys(string binaryKey)
         subKeyList[i] = stepPC2(shiftedLeftC[i] + shiftedRightD[i]);
         //cout<<endl;
     }
-    printIn64BitStyle(subKeyList[0]);
+    //printIn64BitStyle(subKeyList[0]);
 }
 
 string stepInitialPermutation(string text)
@@ -349,6 +355,7 @@ string decToBinary(int n)
     return binaryStr;
 
 }
+
 int stringToInt(string str)
 {
     stringstream converter(str);
@@ -498,29 +505,28 @@ string secondPhase(){
         //cout << l0 << endl;
         //cout << r1 << endl;
     }
-/*
-    for(int j=0;j<17;j++){
-        cout << "Round " << j <<endl;;
-        cout<<"Left Part   "<<endl;
-        for(int i=0; i< 32;i++){
-            cout << leftPartList[j][i];
-            if((i+1)%8==0){
-                cout<<endl;
-            }
-        }
-        cout<<endl;
-        cout<<"Right Part  "<<endl;
-        for(int i=0; i< 32;i++){
-            cout << rightPartList[j][i];
-            if((i+1)%8==0){
-                cout<<endl;
-            }
-        }
-        cout<<endl;
-    }
-*/
-}
 
+    // for(int j=0;j<17;j++){
+    //     cout << "Round " << j <<endl;;
+    //     cout<<"Left Part   "<<endl;
+    //     for(int i=0; i< 32;i++){
+    //         cout << leftPartList[j][i];
+    //         if((i+1)%8==0){
+    //             cout<<endl;
+    //         }
+    //     }
+    //     cout<<endl;
+    //     cout<<"Right Part  "<<endl;
+    //     for(int i=0; i< 32;i++){
+    //         cout << rightPartList[j][i];
+    //         if((i+1)%8==0){
+    //             cout<<endl;
+    //         }
+    //     }
+    //     cout<<endl;
+    // }
+
+}
 
 string finalPermutation(string resultBeforePermutation)
 {
@@ -564,9 +570,13 @@ int main()
     string testText2 = "0100100001100101011011000110110001101111001000000101011101101111";
     string testKey2 = "0011010000101101101101011010100000011101110110111001000000000100";
 
-    createKeys(testKey2);
+    string assignentKey = hex2bin("7a08ea6100b83807");
+    string assignentPlainText = hex2bin("41d0d05826591e52");
+    cout << assignentKey<<endl;
+    cout << assignentPlainText<<endl;
+    createKeys(assignentKey);
 
-    string textAfterInitialPermutation = stepInitialPermutation(binaryText);
+    string textAfterInitialPermutation = stepInitialPermutation(assignentPlainText);
     // cout << textAfterInitialPermutation << endl;
     //printIn64BitStyle(textAfterInitialPermutation);
 
@@ -580,12 +590,23 @@ int main()
     //printIn64BitStyle(leftPartList[1]);
     //printIn64BitStyle(rightPartList[1]);
 
+    cout << "Round\tLeft part\t\tRight Part"<<endl;
+    for (int i = 1; i <= 16; i++)
+    {
+        cout << i << "\t"<<bin2hex(leftPartList[i])<< "\t\t"<< bin2hex(rightPartList[i])<<endl;
+    }
+
+
     string enCryptedBinary = finalPermutation(rightPartList[16]+leftPartList[16]);
     string enCryptedHex = bin2hex(enCryptedBinary);
 
+    cout << enCryptedBinary <<endl;
+    cout << enCryptedHex <<endl;
 
-    //cout << enCryptedBinary <<endl;
-    //cout << enCryptedHex <<endl;
+    string decryptedHBinary = hex2bin(enCryptedHex);
+
+    // cout << enCryptedBinary <<endl;
+    // cout << decryptedHBinary <<endl;
 
 
 }
