@@ -233,7 +233,7 @@ string createKeys(string binaryKey)
         //cout<<endl;
     }
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 16; i++)
     {
         subKeyList[i] = stepPC2(shiftedLeftC[i] + shiftedRightD[i]);
         //cout<<endl;
@@ -562,6 +562,16 @@ int differenceInbits(string binary1,string binary2){
 
 int main()
 {
+
+//    while(true){
+//        string s1,s2;
+//        cin>>s1>>s2;
+//        cout << differenceInbits(hex2bin(s1),hex2bin(s2))<<endl;
+//    }
+
+
+
+
     string plainText = "PRITOM19";
     string key = "LAMAOLOL";
     // cout << "Enter plain text: ";
@@ -581,13 +591,16 @@ int main()
     string testText2 = "0100100001100101011011000110110001101111001000000101011101101111";
     string testKey2 = "0011010000101101101101011010100000011101110110111001000000000100";
 
-    string assignentKey = hex2bin("7a08ea6100b83807");
-    string assignentPlainText = hex2bin("41d0d05826591e52");
+//    string assignentKey = hex2bin("7a08ea6100b83807");
+//    string assignentPlainText = hex2bin("41d0d05826591e52");
 //    cout << assignentKey<<endl;
 //    cout << assignentPlainText<<endl;
-    createKeys(assignentKey);
+    createKeys(testKey);
+    for(int i=0 ; i< 16; i++){
+        cout << subKeyList[i] << endl;
+    }
 
-    string textAfterInitialPermutation = stepInitialPermutation(assignentPlainText);
+    string textAfterInitialPermutation = stepInitialPermutation(testText);
     // cout << textAfterInitialPermutation << endl;
     //printIn64BitStyle(textAfterInitialPermutation);
 
@@ -601,7 +614,7 @@ int main()
     //printIn64BitStyle(leftPartList[1]);
     //printIn64BitStyle(rightPartList[1]);
 
-    cout << "Round\tLeft part\t\tRight Part"<<endl;
+//    cout << "Round\tLeft part\t\tRight Part"<<endl;
 //    for (int i = 0; i <= 16; i++)
 //    {
 //        cout << i << "\t"<<bin2hex(leftPartList[i])<< "\t\t"<< bin2hex(rightPartList[i])<<endl;
@@ -613,6 +626,7 @@ int main()
 
     cout << enCryptedBinary <<endl;
     cout << enCryptedHex <<endl;
+
 
     string decryptedHBinary = hex2bin(enCryptedHex);
 
