@@ -498,12 +498,12 @@ string secondPhase(){
 
         //cout << r0AfterSBox <<endl;
         //printIn64BitStyle(r0AfterSBox);
-        //printIn64BitStyle(r0AfterPBox);
+//        printIn64BitStyle(r0AfterPBox);
         //printIn64BitStyle(r1);
 
         //cout << r0AfterPBox <<endl;
-        //cout << l0 << endl;
-        //cout << r1 << endl;
+//        cout << l0 << endl;
+//        cout << bin2hex(r1) << endl;
     }
 
     // for(int j=0;j<17;j++){
@@ -549,6 +549,17 @@ string finalPermutation(string resultBeforePermutation)
     return finalResult;
 }
 
+int differenceInbits(string binary1,string binary2){
+
+    int lenght = 0;
+    for(int i=0;i<binary1.length();i++){
+        if(binary1[i]!=binary2[i]){
+            lenght++;
+        }
+    }
+    return lenght;
+}
+
 int main()
 {
     string plainText = "PRITOM19";
@@ -572,8 +583,8 @@ int main()
 
     string assignentKey = hex2bin("7a08ea6100b83807");
     string assignentPlainText = hex2bin("41d0d05826591e52");
-    cout << assignentKey<<endl;
-    cout << assignentPlainText<<endl;
+//    cout << assignentKey<<endl;
+//    cout << assignentPlainText<<endl;
     createKeys(assignentKey);
 
     string textAfterInitialPermutation = stepInitialPermutation(assignentPlainText);
@@ -591,10 +602,10 @@ int main()
     //printIn64BitStyle(rightPartList[1]);
 
     cout << "Round\tLeft part\t\tRight Part"<<endl;
-    for (int i = 1; i <= 16; i++)
-    {
-        cout << i << "\t"<<bin2hex(leftPartList[i])<< "\t\t"<< bin2hex(rightPartList[i])<<endl;
-    }
+//    for (int i = 0; i <= 16; i++)
+//    {
+//        cout << i << "\t"<<bin2hex(leftPartList[i])<< "\t\t"<< bin2hex(rightPartList[i])<<endl;
+//    }
 
 
     string enCryptedBinary = finalPermutation(rightPartList[16]+leftPartList[16]);
